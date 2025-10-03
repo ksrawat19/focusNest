@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FocusNest Login</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <style>
+    .background-radial-gradient {
+      background-color: hsl(218, 41%, 15%);
+      background-image: radial-gradient(650px circle at 0% 0%,
+          hsl(218, 41%, 35%) 15%,
+          hsl(218, 41%, 30%) 35%,
+          hsl(218, 41%, 20%) 75%,
+          hsl(218, 41%, 19%) 80%,
+          transparent 100%),
+        radial-gradient(1250px circle at 100% 100%,
+          hsl(218, 41%, 45%) 15%,
+          hsl(218, 41%, 30%) 35%,
+          hsl(218, 41%, 20%) 75%,
+          hsl(218, 41%, 19%) 80%,
+          transparent 100%);
+    }
+
+    #radius-shape-1 {
+      height: 220px;
+      width: 220px;
+      top: -60px;
+      left: -130px;
+      background: radial-gradient(#44006b, #ad1fff);
+      overflow: hidden;
+    }
+
+    #radius-shape-2 {
+      border-radius: 38% 62% 63% 37% / 70% 33% 67% 30%;
+      bottom: -60px;
+      right: -110px;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(#44006b, #ad1fff);
+      overflow: hidden;
+    }
+
+    .bg-glass {
+      background-color: hsla(0, 0%, 100%, 0.9) !important;
+      backdrop-filter: saturate(200%) blur(25px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-floating > label {
+      color: hsl(218, 41%, 20%);
+    }
+
+    .form-floating > .form-control:focus ~ label,
+    .form-floating > .form-control:not(:placeholder-shown) ~ label {
+      color: hsl(218, 81%, 75%);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #ad1fff, #44006b);
+      border: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(173, 31, 255, 0.3);
+    }
+
+    .fade-in {
+      animation: fadeIn 0.8s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .text-glow {
+      text-shadow: 0 0 10px rgba(173, 31, 255, 0.5);
+    }
+
+    /* Center the two-column layout on large screens */
+    .centered-row {
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body class="background-radial-gradient overflow-hidden">
+  <section class="vh-100 d-flex align-items-center justify-content-center py-5">
+    <div class="container px-4 px-md-5">
+      <div class="row gx-lg-5 align-items-center centered-row">
+        <!-- Left Column: Welcome Text -->
+        <div class="col-lg-6 mb-5 mb-lg-0 fade-in text-center text-lg-start" style="z-index: 10">
+          <h1 class="display-4 fw-bold ls-tight mb-3" style="color: hsl(218, 81%, 95%)">
+            Welcome back to <br />
+            <span class="text-glow" style="color: hsl(218, 81%, 75%)">FocusNest</span>
+          </h1>
+          <p class="mb-0 opacity-80 fs-5" style="color: hsl(218, 81%, 85%)">
+            Log in to organize tasks, collaborate seamlessly, and build unstoppable momentum.
+          </p>
+          <i class="bi bi-rocket-takeoff-fill mt-3 d-block" style="font-size: 3rem; color: hsl(218, 81%, 75%);"></i>
+        </div>
+
+        <!-- Right Column: Login Form -->
+        <div class="col-lg-6 mb-5 mb-lg-0 position-relative">
+          <div id="radius-shape-1" class="position-absolute rounded-circle shadow-5-strong"></div>
+          <div id="radius-shape-2" class="position-absolute shadow-5-strong"></div>
+
+          <div id="error-alert" class="alert alert-danger d-none"></div>
+          <div id="success-alert" class="alert alert-success d-none"></div>
+
+          <% if (error === 'invalid') { %>
+            <div class="alert alert-danger">Invalid credentials. Please try again.</div>
+            <% } else if (error === 'notfound') { %>
+            <div class="alert alert-danger">User not found. Please register first.</div>
+          <% } %>
+
+          <div class="card bg-glass fade-in">
+            <div class="card-body px-4 py-5 px-md-5">
+              <!-- Dynamic Error Message -->
+              <div id="error-alert" class="alert alert-danger d-none" role="alert">
+                <!-- Populated via JS -->
+              </div>
+
+              <form action="/login" method="POST" id="loginForm">
+                <div class="form-floating mb-4">
+                  <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" required>
+                  <label for="email">
+                    <i class="bi bi-envelope me-1"></i>Email address
+                  </label>
+                </div>
+
+                <div class="form-floating mb-4">
+                  <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                  <label for="password">
+                    <i class="bi bi-lock me-1"></i>Password
+                  </label>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-lg w-100 mb-3">
+                  <i class="bi bi-box-arrow-in-right me-2"></i>Log in
+                </button>
+
+                <div class="d-flex justify-content-between align-items-center">
+                  <a href="/forgot-password" class="text-decoration-none small" style="color: hsl(218, 81%, 75%);">Forgot password?</a>
+                  <a href="/register" class="text-decoration-none small" style="color: hsl(218, 81%, 75%);">Sign up</a>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const params = new URLSearchParams(window.location.search);
+    const errorAlert = document.getElementById('error-alert');
+    const successAlert = document.getElementById('success-alert');
+
+    // Modular alert display
+    function showAlert(element, message, type = 'success') {
+      if (!element) return;
+      element.textContent = message;
+      element.classList.remove('d-none');
+      element.classList.add(`alert-${type}`);
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Logout message
+    if (params.get('loggedOut')) {
+      showAlert(successAlert, 'You’ve been logged out successfully.', 'success');
+    }
+
+    // Subtle input focus animations
+    const inputs = document.querySelectorAll('.form-control');
+    inputs.forEach(input => {
+      input.addEventListener('focus', function() {
+        this.parentElement.style.transform = 'scale(1.02)';
+      });
+      input.addEventListener('blur', function() {
+        this.parentElement.style.transform = 'scale(1)';
+      });
+    });
+  });
+</script>
+
+</body>
+</html>

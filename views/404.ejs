@@ -2,12 +2,140 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Page Not Found – FocusNest</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      font-family: 'Arial', sans-serif;
+    }
+
+    .background-radial-gradient {
+      background-color: hsl(218, 41%, 15%);
+      background-image: radial-gradient(650px circle at 0% 0%,
+          hsl(218, 41%, 35%) 15%,
+          hsl(218, 41%, 30%) 35%,
+          hsl(218, 41%, 20%) 75%,
+          hsl(218, 41%, 19%) 80%,
+          transparent 100%),
+        radial-gradient(1250px circle at 100% 100%,
+          hsl(218, 41%, 45%) 15%,
+          hsl(218, 41%, 30%) 35%,
+          hsl(218, 41%, 20%) 75%,
+          hsl(218, 41%, 19%) 80%,
+          transparent 100%);
+    }
+
+    #radius-shape-1 {
+      height: 220px;
+      width: 220px;
+      top: -60px;
+      left: -130px;
+      background: radial-gradient(#44006b, #ad1fff);
+      overflow: hidden;
+      position: absolute;
+      border-radius: 50%;
+      z-index: 1;
+    }
+
+    #radius-shape-2 {
+      border-radius: 38% 62% 63% 37% / 70% 33% 67% 30%;
+      bottom: -60px;
+      right: -110px;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(#44006b, #ad1fff);
+      overflow: hidden;
+      position: absolute;
+      z-index: 1;
+    }
+
+    .bg-glass {
+      background-color: hsla(0, 0%, 100%, 0.9) !important;
+      backdrop-filter: saturate(200%) blur(25px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      border-radius: 16px;
+      padding: 2rem;
+      max-width: 600px;
+      width: 90%;
+      z-index: 2;
+      position: relative;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #ad1fff, #44006b);
+      border: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      padding: 0.75rem 1.5rem;
+      font-size: 1.1rem;
+      border-radius: 8px;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(173, 31, 255, 0.3);
+    }
+
+    .fade-in {
+      animation: fadeIn 0.8s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .text-glow {
+      text-shadow: 0 0 10px rgba(173, 31, 255, 0.5);
+    }
+
+    h1 {
+      font-size: 5rem;
+      font-weight: 700;
+      color: hsl(218, 81%, 75%);
+      margin-bottom: 1rem;
+    }
+
+    p.lead {
+      color: hsl(218, 41%, 20%);
+      font-size: 1.25rem;
+      margin-bottom: 2rem;
+    }
+
+    code {
+      color: #ad1fff;
+      font-size: 1.1rem;
+      background: rgba(173, 31, 255, 0.1);
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 3.5rem;
+      }
+
+      .bg-glass {
+        padding: 1.5rem;
+      }
+    }
+  </style>
 </head>
-<body class="container mt-5 text-center">
-  <h1 class="display-4">404</h1>
-  <p class="lead">Oops! The page <code><%= url %></code> doesn’t exist.</p>
-  <a href="/dashboard" class="btn btn-primary">Go to Dashboard</a>
+<body class="background-radial-gradient">
+  <div id="radius-shape-1"></div>
+  <div id="radius-shape-2"></div>
+  <div class="bg-glass text-center fade-in">
+    <h1 class="text-glow">404</h1>
+    <p class="lead">Oops! The page <code><%= url %></code> doesn’t exist.</p>
+    <a href="/dashboard" class="btn btn-primary">Go to Dashboard</a>
+  </div>
 </body>
 </html>
